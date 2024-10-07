@@ -17,6 +17,7 @@ const config: Config = {
         "green-200": "#F6FF99",
         "green-100": "#FBFFCC",
         red: "#FF4A4A",
+        success: "#3681FE",
       },
     },
   },

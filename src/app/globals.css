@@ -97,4 +97,20 @@ html {
     font-weight: 500;
     line-height: 16px;
   }
+
+  input {
+    outline: none;
+  }
+
+  input::placeholder {
+    color: #bbbbbb;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-columns: repeat(3, max-content);
+    column-gap: 40px;
+    row-gap: 20px;
+  }
 }
