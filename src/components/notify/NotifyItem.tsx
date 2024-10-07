@@ -1,5 +1,5 @@
 import Image from "next/image";
-import EmptyFileSrc from "@/assets/empty-file.png";
+import emptyFileSrc from "@/assets/empty-file.png";
 import CheckSvg from "@/assets/icons/check.svg";
 import { NotifyItemProps } from "@/types/notify";
 
@@ -24,7 +24,7 @@ const NotifyItem = ({ isLast }: NotifyItem) => {
       <div
         className={`border-gray-200 flex items-center gap-4 ${!isLast && "pb-7 border-b"} `}
       >
-        <Image src={EmptyFileSrc} alt="영상 변환" width={56} height={56} />
+        <Image src={emptyFileSrc} alt="영상 변환" width={56} height={56} />
         <div>
           <span className="sub-header3">열심히 영상을 변환하는 중이에요!</span>
           <br />
