@@ -1,5 +1,6 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Header from "./Header";
 
 export default function GlobalProvider({
   children,
@@ -8,6 +9,9 @@ export default function GlobalProvider({
 }) {
   const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <>
+      <Header />
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </>
   );
 }
