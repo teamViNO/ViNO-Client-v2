@@ -13,7 +13,7 @@ const Notify = ({ data, onCloseNotify }: NotifyProps) => {
   return (
     <div className="absolute w-full flex flex-col items-center" ref={notifyRef}>
       <TooltipSvg />
-      <div className="py-9 px-7 flex flex-col rounded-lg w-[360px] max-h-[584px] overflow-auto relative right-[120px] shadow-lg gap-9">
+      <div className="py-9 px-7 flex flex-col rounded-lg w-[360px] max-h-[584px] overflow-auto relative right-[120px] shadow-lg gap-9 bg-white">
         <div className="flex justify-between items-center">
           <span className="sub-header3">읽지 않은 알림</span>
           <span className="rounded-lg bg-green-400 w-[26px] h-[26px] flex items-center justify-center">
@@ -27,7 +27,11 @@ const Notify = ({ data, onCloseNotify }: NotifyProps) => {
             </span>
           ) : (
             data.map((item, idx) => (
-              <NotifyItem isLast={idx === data.length - 1} {...item} />
+              <NotifyItem
+                key={item.alarm_id}
+                isLast={idx === data.length - 1}
+                {...item}
+              />
             ))
           )}
         </div>
