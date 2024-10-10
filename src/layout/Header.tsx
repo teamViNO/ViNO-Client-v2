@@ -4,7 +4,7 @@ import LogoSvg from "@/assets/icons/logo.svg";
 import SearchSvg from "@/assets/icons/search.svg";
 import NotifyExistSvg from "@/assets/icons/notify-exist.svg";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Notify from "@/components/notify";
 import { usePathname } from "next/navigation";
@@ -12,22 +12,9 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isNotifyOpen, setIsNotifyOpen] = useState(false);
-  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(true);
 
   const pathname = usePathname();
-
-  const observer = useMemo(() => {
-    return new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const { isIntersecting } = entry;
-
-          setIsIntersecting(isIntersecting);
-        });
-      },
-      { threshold: 0.1 }
-    );
-  }, []);
 
   const Icon = isSidebarOpen ? CloseSvg : MenuSvg;
   const isLogin = true;
@@ -49,6 +36,17 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const { isIntersecting } = entry;
+
+          setIsIntersecting(isIntersecting);
+        });
+      },
+      { threshold: 0.1 }
+    );
+
     const darkSectionList = document.querySelectorAll(".dark-section") || [];
 
     if (darkSectionList.length) {
@@ -60,7 +58,7 @@ const Header = () => {
     return () => {
       observer.disconnect();
     };
-  }, [observer, pathname]);
+  }, [pathname]);
 
   return (
     <header

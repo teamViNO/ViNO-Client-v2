@@ -47,7 +47,7 @@ const YoutubeInput = () => {
   };
 
   return (
-    <section className="dark-section flex flex-col gap-10 pt-[120px] pb-[180px] px-[266px] bg-gray-500">
+    <>
       <div className="flex flex-col gap-2 items-center">
         <h1 className="header3 text-white">어떤 영상을 정리해볼까요?</h1>
         <h2
@@ -125,7 +125,7 @@ const YoutubeInput = () => {
           </div>
         </Modal>
       )}
-    </section>
+    </>
   );
 };
 

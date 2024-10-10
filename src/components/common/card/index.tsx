@@ -1,10 +1,7 @@
-"use client";
-
-import React from "react";
 import Chip from "../chip";
 import Image, { StaticImageData } from "next/image";
 
-interface CardProps {
+export interface CardProps {
   id: number;
   //   src: string; 임시로 변경
   src: StaticImageData;
