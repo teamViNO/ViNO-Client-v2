@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import Modal from "../common/modal";
 import Link from "next/link";
 import Image from "next/image";
+import Chip from "../common/chip";
 
 const YoutubeInput = () => {
   const [video, setVideo] = useState({
@@ -46,7 +47,7 @@ const YoutubeInput = () => {
   };
 
   return (
-    <>
+    <section className="dark-section flex flex-col gap-10 pt-[120px] pb-[180px] px-[266px] bg-gray-500">
       <div className="flex flex-col gap-2 items-center">
         <h1 className="header3 text-white">어떤 영상을 정리해볼까요?</h1>
         <h2
@@ -118,15 +119,13 @@ const YoutubeInput = () => {
               />
               <div className="flex flex-col justify-between py-6 px-5 w-[290px]">
                 <span className="sub-header3">우리는 카카오워크로 일해요</span>
-                <span className="caption1 text-gray-400 bg-gray-100 py-2 px-3 rounded-lg w-max">
-                  # 디자인
-                </span>
+                <Chip name="elwkdls" />
               </div>
             </Link>
           </div>
         </Modal>
       )}
-    </>
+    </section>
   );
 };
 
