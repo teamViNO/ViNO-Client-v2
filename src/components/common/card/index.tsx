@@ -10,6 +10,7 @@ export interface CardProps {
   chips: string[];
   children?: React.ReactNode;
   onClick?: () => void;
+  onMouseLeave?: () => void;
 }
 
 const Card = ({
@@ -20,14 +21,22 @@ const Card = ({
   chips,
   children,
   onClick,
+  onMouseLeave,
 }: CardProps) => {
   const Element = children ? "div" : "button";
   return (
     <Element
-      className={`flex flex-col overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all h-[370px] relative group ${children && "hover:h-[420px]"}`}
+      className={`flex flex-col overflow-hidden rounded-b-2xl shadow-lg hover:shadow-2xl hover:overflow-visible transition-all h-[370px] relative group ${children && "hover:h-[420px]"}`}
       onClick={() => onClick?.()}
+      onMouseLeave={() => onMouseLeave?.()}
     >
-      <Image src={src} alt="추천 영상 썸네일" width={290} height={164} />
+      <Image
+        src={src}
+        alt="추천 영상 썸네일"
+        width={290}
+        height={164}
+        className="rounded-t-2xl"
+      />
       <div className="bg-white py-6 px-5 h-[208px] flex flex-col justify-between">
         <span className="sub-header3">{title}</span>
         <p className="body3 text-gray-300">{description}</p>

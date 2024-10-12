@@ -10,6 +10,7 @@ import Card from "@/components/common/card";
 import Image from "next/image";
 import RoundButton from "@/components/common/button/round-button";
 import Link from "next/link";
+import { Fragment, useState } from "react";
 
 const cards = [
   {
@@ -28,8 +29,56 @@ const cards = [
   },
 ];
 
+const categories = [
+  {
+    id: 1,
+    name: "개발",
+    subs: [
+      { id: 2, name: "프론트엔드" },
+      { id: 3, name: "백엔드" },
+      { id: 4, name: "데이터베이스" },
+    ],
+  },
+  {
+    id: 5,
+    name: "디자인",
+    subs: [
+      { id: 6, name: "UI/UX" },
+      { id: 7, name: "그래픽 디자인" },
+      { id: 8, name: "제품 디자인" },
+    ],
+  },
+  { id: 9, name: "여행", subs: [] },
+];
+
 export default function Home() {
+  const [ctgState, setCtgState] = useState({
+    id: 1,
+    name: "개발",
+    topCtgId: -1,
+    startSelect: false,
+  });
+
   const isLogin = true;
+
+  const handleOpenCategory = (id: number) => {
+    if (ctgState.topCtgId === id)
+      return setCtgState((prev) => ({ ...prev, topCtgId: -1 }));
+    setCtgState((prev) => ({ ...prev, topCtgId: id }));
+  };
+
+  const handleSelectCategory = (props: { id: number; name: string }) => {
+    setCtgState((prev) => ({ ...prev, ...props, topCtgId: -1 }));
+  };
+
+  const onStartSelect = () => {
+    setCtgState((prev) => ({ ...prev, startSelect: !prev.startSelect }));
+  };
+
+  const onMouseLeave = () => {
+    setCtgState((prev) => ({ ...prev, startSelect: false }));
+  };
+
   return (
     <main>
       <section className="dark-section flex flex-col gap-10 pt-[120px] pb-[180px] px-[266px] bg-gray-500">
@@ -47,14 +96,56 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-3 gap-x-5 gap-y-10">
             {cards.map((card) => (
-              <Card key={card.id} {...card}>
-                <div className="bg-white absolute -bottom-10 group-hover:bottom-3.5 w-full transition-all">
+              <Card key={card.id} {...card} onMouseLeave={onMouseLeave}>
+                <div className="bg-white absolute -bottom-10 group-hover:bottom-2.5 w-full transition-all">
                   <div className="flex px-5 gap-2 items-center">
-                    <button className="body3 text-gray-400 flex items-center justify-between border border-gray-200 flex-1 px-4 rounded-lg py-2 h-max">
-                      디자인
-                      <ArrowDownSvg width="18" height="18" />
-                    </button>
-                    <button className="rounded-lg bg-gray-200 p-1 h-max">
+                    <div className="flex flex-1 flex-col relative">
+                      <button
+                        onClick={onStartSelect}
+                        className="body3 text-gray-400 flex items-center justify-between border border-gray-200 flex-1 px-4 rounded-lg py-2"
+                      >
+                        {ctgState.name}
+                        <ArrowDownSvg width="18" height="18" />
+                      </button>
+                      <div className="flex flex-col w-full absolute top-11 z-10 bg-white rounded-xl shadow-lg">
+                        {ctgState.startSelect &&
+                          categories.map((category) => (
+                            <Fragment key={category.id}>
+                              <div className="flex flex-1 items-center gap-2 truncate px-5 py-3 text-sm text-gray-400 font-bold">
+                                <button
+                                  onClick={() =>
+                                    handleOpenCategory(category.id)
+                                  }
+                                  className={`transition-all ${ctgState.topCtgId === category.id && "rotate-180"}`}
+                                >
+                                  <ArrowDownSvg width="18" height="18" />
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleSelectCategory({
+                                      id: category.id,
+                                      name: category.name,
+                                    })
+                                  }
+                                >
+                                  {category.name}
+                                </button>
+                              </div>
+                              {ctgState.topCtgId === category.id &&
+                                category.subs.map((sub) => (
+                                  <button
+                                    key={sub.id}
+                                    onClick={() => handleSelectCategory(sub)}
+                                    className="pl-11 text-start body3 text-gray-400 py-3"
+                                  >
+                                    {sub.name}
+                                  </button>
+                                ))}
+                            </Fragment>
+                          ))}
+                      </div>
+                    </div>
+                    <button className="rounded-lg bg-green-400 p-1 h-max">
                       <OpenFileSvg width="28" height="28" />
                     </button>
                   </div>
