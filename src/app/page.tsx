@@ -4,6 +4,8 @@ import YoutubeInput from "@/components/home/YoutubeInput";
 import MoveSvg from "@/assets/icons/move.svg";
 import exampleSrc from "@/assets/convert-example.png";
 import emptyVideSrc from "@/assets/empty-video.png";
+import ArrowDownSvg from "@/assets/icons/arrow-down.svg";
+import OpenFileSvg from "@/assets/icons/open-file.svg";
 import Card from "@/components/common/card";
 import Image from "next/image";
 import RoundButton from "@/components/common/button/round-button";
@@ -45,7 +47,19 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-3 gap-x-5 gap-y-10">
             {cards.map((card) => (
-              <Card key={card.id} {...card} />
+              <Card key={card.id} {...card}>
+                <div className="bg-white absolute -bottom-10 group-hover:bottom-3.5 w-full transition-all">
+                  <div className="flex px-5 gap-2 items-center">
+                    <button className="body3 text-gray-400 flex items-center justify-between border border-gray-200 flex-1 px-4 rounded-lg py-2 h-max">
+                      디자인
+                      <ArrowDownSvg width="18" height="18" />
+                    </button>
+                    <button className="rounded-lg bg-gray-200 p-1 h-max">
+                      <OpenFileSvg width="28" height="28" />
+                    </button>
+                  </div>
+                </div>
+              </Card>
             ))}
           </div>
         </div>

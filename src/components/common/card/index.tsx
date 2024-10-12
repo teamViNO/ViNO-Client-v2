@@ -21,9 +21,10 @@ const Card = ({
   children,
   onClick,
 }: CardProps) => {
+  const Element = children ? "div" : "button";
   return (
-    <button
-      className="flex flex-col rounded-2xl overflow-hidden shadow-lg hover:scale-110 hover:shadow-2xl transition-all"
+    <Element
+      className={`flex flex-col overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all h-[370px] relative group ${children && "hover:h-[420px]"}`}
       onClick={() => onClick?.()}
     >
       <Image src={src} alt="추천 영상 썸네일" width={290} height={164} />
@@ -37,7 +38,7 @@ const Card = ({
         </div>
       </div>
       {children}
-    </button>
+    </Element>
   );
 };
 
