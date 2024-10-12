@@ -26,7 +26,7 @@ const Card = ({
   const Element = children ? "div" : "button";
   return (
     <Element
-      className={`flex flex-col overflow-hidden rounded-b-2xl shadow-lg hover:shadow-2xl hover:overflow-visible transition-all h-[370px] relative group ${children && "hover:h-[420px]"}`}
+      className={`flex flex-col overflow-hidden rounded-b-2xl shadow-lg hover:shadow-2xl transition-all h-[370px] relative group ${children && "hover:h-[420px] hover:overflow-visible"}`}
       onClick={() => onClick?.()}
       onMouseLeave={() => onMouseLeave?.()}
     >
@@ -37,7 +37,7 @@ const Card = ({
         height={164}
         className="rounded-t-2xl"
       />
-      <div className="bg-white py-6 px-5 h-[208px] flex flex-col justify-between">
+      <div className="bg-white py-6 px-5 h-[208px] flex flex-col justify-between self-stretch text-start">
         <span className="sub-header3">{title}</span>
         <p className="body3 text-gray-300">{description}</p>
         <div className="flex gap-2">
