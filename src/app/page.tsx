@@ -4,13 +4,14 @@ import YoutubeInput from "@/components/home/YoutubeInput";
 import MoveSvg from "@/assets/icons/move.svg";
 import exampleSrc from "@/assets/convert-example.png";
 import emptyVideSrc from "@/assets/empty-video.png";
+import SuccessSrc from "@/assets/success.png";
 import ArrowDownSvg from "@/assets/icons/arrow-down.svg";
 import OpenFileSvg from "@/assets/icons/open-file.svg";
 import Card from "@/components/common/card";
 import Image from "next/image";
 import RoundButton from "@/components/common/button/round-button";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 const cards = [
   {
@@ -58,6 +59,8 @@ export default function Home() {
     topCtgId: -1,
     startSelect: false,
   });
+  const [endReached, setEndReached] = useState(false);
+  const lastElementRef = useRef<HTMLDivElement | null>(null);
 
   const isLogin = true;
 
@@ -79,6 +82,31 @@ export default function Home() {
     setCtgState((prev) => ({ ...prev, startSelect: false }));
   };
 
+  useEffect(() => {
+    let hasIntersected = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasIntersected) {
+          hasIntersected = true;
+          setEndReached(true);
+          const timer = setTimeout(() => {
+            setEndReached(false);
+            clearTimeout(timer);
+          }, 2000);
+        }
+      },
+      { threshold: 1 }
+    );
+    if (lastElementRef.current) {
+      observer.observe(lastElementRef.current);
+    }
+    return () => {
+      if (lastElementRef.current) {
+        observer.unobserve(lastElementRef.current);
+      }
+    };
+  }, []);
+
   return (
     <main>
       <section className="dark-section flex flex-col gap-10 pt-[120px] pb-[180px] px-[266px] bg-gray-500">
@@ -87,7 +115,7 @@ export default function Home() {
       <section
         className={`bg-white rounded-t-[60px] relative bottom-[60px] py-[100px] flex items-center gap-40 ${isLogin ? "flex-col-reverse" : "flex-col"}`}
       >
-        <div className="flex flex-col gap-10">
+        <div ref={lastElementRef} className="flex flex-col gap-10">
           <div className="flex flex-col gap-2.5">
             <h3 className="header5">이런 인사이트는 어때요?</h3>
             <h4 className="sub-header2 text-gray-400">
@@ -189,6 +217,20 @@ export default function Home() {
           )}
         </div>
       </section>
+      {endReached && (
+        <section className="flex flex-col gap-5 items-center text-center pb-[160px]">
+          <Image
+            src={SuccessSrc}
+            alt="마지막 영상 알림 아이콘"
+            width={88}
+            height={88}
+          />
+          <h3 className="sub-header2 text-gray-400">
+            마지막 영상이에요!
+            <br />더 많은 영상 변환하러 가볼까요?
+          </h3>
+        </section>
+      )}
     </main>
   );
 }
