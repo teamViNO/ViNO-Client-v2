@@ -9,8 +9,6 @@
 }
 
 html {
-  font-family: var(--font-medium);
-
   .header1 {
     font-size: 44px;
     font-weight: 700;
@@ -98,5 +96,21 @@ html {
     font-size: 10px;
     font-weight: 500;
     line-height: 16px;
+  }
+
+  input {
+    outline: none;
+  }
+
+  input::placeholder {
+    color: #bbbbbb;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-columns: repeat(3, max-content);
+    column-gap: 40px;
+    row-gap: 20px;
   }
 }
